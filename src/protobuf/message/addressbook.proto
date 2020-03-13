@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package protobuf;
+
+import "google/protobuf/timestamp.proto";
+
+message Person {
+    string name = 1;
+    int32   id  = 2; // Unique ID number for this person
+    string  email = 3;
+
+    enum PhoneType {
+        MOBILE = 0;
+        HOME = 1;
+        WORK = 2;
+    }
+
+    message PhoneNumber {
+        string number = 1;
+        PhoneType type = 2;
+    }
+
+    repeated PhoneNumber phones = 4;
+
+    google.protobuf.Timestamp last_updated = 5;
+}
+
+message AddressBook {
+    repeated Person people = 1;
+}
+
+// generate go code of a message (addressbook.pb.go)
+// protoc -I=$SRC_DIR --go_out=$DST_DIR $SRC_DIR/addressbook.proto
+// protoc -I=/data/htdocs/go_demo/src/protobuf/message --go_out=/data/htdocs/go_demo/src/protobuf/message /data/htdocs/go_demo/src/protobuf/message/addressbook.proto
+// demo里的pb "github.com/protocolbuffers/protobuf/examples/tutorial"需要进入目录并执行make go, 这里使用自己测试生成的文件 pb "./message"
