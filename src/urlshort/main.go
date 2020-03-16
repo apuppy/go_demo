@@ -37,5 +37,5 @@ func defaultMux() *http.ServeMux {
 }
 
 func hello(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(w, "Hello, world!")
+	fmt.Fprintln(w, "Hello, world!")
 }
