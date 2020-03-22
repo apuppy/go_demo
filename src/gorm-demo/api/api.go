@@ -10,4 +10,7 @@ func Run() {
 
 	// table migration
 	model.AutoMigrations()
+
+	// add user
+	model.NewUser(model.User{Nickname: "简爱", Email: "jane@gmail.com", Password: "123987"})
 }
