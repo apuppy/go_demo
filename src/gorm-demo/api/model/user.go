@@ -1,6 +1,7 @@
 package model
 
 import (
+	"gorm-demo/api/security"
 	"time"
 )
 
@@ -20,6 +21,11 @@ type User struct {
 func NewUser(user User) error {
 	db := Connect()
 	defer db.Close()
-	rs := db.Create(&user)
-	return rs.Error
+	var err error
+	user.Password, err = security.Hash(user.Password)
+	if err != nil {
+		return nil
+	}
+	err = db.Create(&user).Error
+	return err
 }
