@@ -7,19 +7,19 @@ import (
 	"net/http"
 )
 
-// PostUser add user
-func PostUser(w http.ResponseWriter, r *http.Request) {
+// PostFeedback post feedback
+func PostFeedback(w http.ResponseWriter, r *http.Request) {
 	body := util.BodyParser(r)
-	var user model.User
-	err := json.Unmarshal(body, &user)
+	var feedback model.Feedback
+	err := json.Unmarshal(body, &feedback)
 	if err != nil {
 		util.ToJSON(w, err.Error(), http.StatusUnprocessableEntity)
 		return
 	}
-	err = model.NewUser(user)
+	err = model.NewFeedback(feedback)
 	if err != nil {
 		util.ToJSON(w, err.Error(), http.StatusUnprocessableEntity)
 		return
 	}
-	util.ToJSON(w, "user successfully added", http.StatusCreated)
+	util.ToJSON(w, "feedback successfully added", http.StatusCreated)
 }

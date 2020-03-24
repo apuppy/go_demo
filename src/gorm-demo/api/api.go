@@ -1,7 +1,5 @@
 package api
 
-import "gorm-demo/api/model"
-
 // Run api entry
 func Run() {
 	// db := model.Connect()
@@ -9,7 +7,7 @@ func Run() {
 	// fmt.Println("Database connected!")
 
 	// table migration
-	model.AutoMigrations()
+	// model.AutoMigrations()
 
 	// add user
 	// model.NewUser(model.User{Nickname: "简爱", Email: "jane@gmail.com", Password: "123987"})

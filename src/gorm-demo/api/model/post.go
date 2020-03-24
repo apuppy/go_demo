@@ -14,3 +14,10 @@ type Post struct {
 	UpdatedAt   time.Time  `gorm:"default:current_timestamp()" json:"updated_at"`
 	Feedbacks   []Feedback `gorm:"ForeignKey:PostID" json:"feedbacks"`
 }
+
+// NewPost add new post
+func NewPost(post Post) error {
+	db := Connect()
+	defer db.Close()
+	return db.Create(&post).Error
+}
