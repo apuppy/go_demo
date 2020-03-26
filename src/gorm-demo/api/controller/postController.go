@@ -23,3 +23,9 @@ func PostPost(w http.ResponseWriter, r *http.Request) {
 	}
 	util.ToJSON(w, "post successfully added", http.StatusCreated)
 }
+
+//GetPosts get rows from post
+func GetPosts(w http.ResponseWriter, r *http.Request) {
+	posts := model.GetAll(model.POSTS)
+	util.ToJSON(w, posts, http.StatusOK)
+}

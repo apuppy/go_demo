@@ -23,3 +23,9 @@ func PostFeedback(w http.ResponseWriter, r *http.Request) {
 	}
 	util.ToJSON(w, "feedback successfully added", http.StatusCreated)
 }
+
+//GetFeedbacks get rows from feedback
+func GetFeedbacks(w http.ResponseWriter, r *http.Request) {
+	feedbacks := model.GetAll(model.FEEDBACKS)
+	util.ToJSON(w, feedbacks, http.StatusOK)
+}
