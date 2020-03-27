@@ -26,6 +26,6 @@ func PostPost(w http.ResponseWriter, r *http.Request) {
 
 //GetPosts get rows from post
 func GetPosts(w http.ResponseWriter, r *http.Request) {
-	posts := model.GetAll(model.POSTS)
+	posts := model.GetPosts()
 	util.ToJSON(w, posts, http.StatusOK)
 }

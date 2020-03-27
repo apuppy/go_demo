@@ -5,6 +5,9 @@ import (
 	"gorm-demo/api/model"
 	"gorm-demo/api/util"
 	"net/http"
+	"strconv"
+
+	"github.com/gorilla/mux"
 )
 
 // PostUser add user
@@ -28,4 +31,24 @@ func PostUser(w http.ResponseWriter, r *http.Request) {
 func GetUsers(w http.ResponseWriter, r *http.Request) {
 	users := model.GetAll(model.USERS)
 	util.ToJSON(w, users, http.StatusOK)
+}
+
+//GetUser get user by id request
+func GetUser(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, _ := strconv.ParseUint(vars["id"], 10, 64)
+	user := model.GetByID(model.USERS, id)
+	util.ToJSON(w, user, http.StatusOK)
+}
+
+//DeleteUser delete user by id request
+func DeleteUser(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, _ := strconv.ParseUint(vars["id"], 10, 64)
+	rows, err := model.DeleteByID(model.USERS, id)
+	if err != nil {
+		util.ToJSON(w, err.Error(), http.StatusUnprocessableEntity)
+		return
+	}
+	util.ToJSON(w, rows, http.StatusOK)
 }

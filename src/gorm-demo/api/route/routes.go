@@ -13,6 +13,8 @@ func NewRouter() *mux.Router {
 	/* users route */
 	r.HandleFunc("/users", controller.PostUser).Methods("POST")
 	r.HandleFunc("/users", controller.GetUsers).Methods("GET")
+	r.HandleFunc("/users/{id}", controller.GetUser).Methods("GET")
+	r.HandleFunc("/users/{id}", controller.DeleteUser).Methods("DELETE")
 
 	/* posts route */
 	r.HandleFunc("/posts", controller.PostPost).Methods("POST")

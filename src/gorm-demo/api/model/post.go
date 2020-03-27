@@ -21,3 +21,16 @@ func NewPost(post Post) error {
 	defer db.Close()
 	return db.Create(&post).Error
 }
+
+//GetPosts get post rows
+func GetPosts() []Post {
+	db := Connect()
+	defer db.Close()
+	var posts []Post
+	db.Order("id ASC").Find(&posts)
+	for i := range posts {
+		db.Model(&posts[i]).Related(&posts[i].User)
+		posts[i].Feedbacks = GetFeedbackByPost(posts[i])
+	}
+	return posts
+}

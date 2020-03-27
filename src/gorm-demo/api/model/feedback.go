@@ -20,3 +20,15 @@ func NewFeedback(feedback Feedback) error {
 	defer db.Close()
 	return db.Create(&feedback).Error
 }
+
+//GetFeedbackByPost get feedback by post_id
+func GetFeedbackByPost(post Post) []Feedback {
+	db := Connect()
+	defer db.Close()
+	var feedbacks []Feedback
+	db.Where("post_id = ?", post.ID).Find(&feedbacks)
+	for i := range feedbacks {
+		db.Model(&feedbacks[i]).Related(&post)
+	}
+	return feedbacks
+}
