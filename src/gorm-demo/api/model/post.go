@@ -34,3 +34,17 @@ func GetPosts() []Post {
 	}
 	return posts
 }
+
+// UpdatePost update post
+func UpdatePost(post Post) (int64, error) {
+	db := Connect()
+	defer db.Close()
+	rs := db.Model(&post).Where("id = ?", post.ID).UpdateColumns(
+		map[string]interface{}{
+			"description": post.Description,
+			"image_url":   post.ImageURL,
+			"subtitle":    post.Subtitle,
+		},
+	)
+	return rs.RowsAffected, rs.Error
+}

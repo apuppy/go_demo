@@ -52,3 +52,23 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 	}
 	util.ToJSON(w, rows, http.StatusOK)
 }
+
+//PutUser update user route
+func PutUser(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id, _ := strconv.ParseUint(vars["id"], 10, 64)
+	body := util.BodyParser(r)
+	var user model.User
+	err := json.Unmarshal(body, &user)
+	if err != nil {
+		util.ToJSON(w, err.Error(), http.StatusUnprocessableEntity)
+		return
+	}
+	user.ID = uint32(id)
+	rows, err := model.UpdateUser(user)
+	if err != nil {
+		util.ToJSON(w, err.Error(), http.StatusUnprocessableEntity)
+		return
+	}
+	util.ToJSON(w, rows, http.StatusOK)
+}

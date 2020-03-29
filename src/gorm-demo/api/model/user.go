@@ -29,3 +29,16 @@ func NewUser(user User) error {
 	err = db.Create(&user).Error
 	return err
 }
+
+// UpdateUser update user
+func UpdateUser(user User) (int64, error) {
+	db := Connect()
+	defer db.Close()
+	rs := db.Model(&user).Where("id = ?", user.ID).UpdateColumns(
+		map[string]interface{}{
+			"nickname": user.Nickname,
+			"email":    user.Email,
+		},
+	)
+	return rs.RowsAffected, rs.Error
+}

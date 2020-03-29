@@ -13,5 +13,5 @@ func Run() {
 	// model.NewUser(model.User{Nickname: "简爱", Email: "jane@gmail.com", Password: "123987"})
 
 	// start http server
-	listen(9090)
+	listen(9999)
 }

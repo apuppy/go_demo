@@ -21,6 +21,18 @@ func NewFeedback(feedback Feedback) error {
 	return db.Create(&feedback).Error
 }
 
+//GetFeedbacks get feedback rows
+func GetFeedbacks() []Feedback {
+	db := Connect()
+	defer db.Close()
+	var feedbacks []Feedback
+	db.Order("id ASC").Find(&feedbacks)
+	for i := range feedbacks {
+		db.Model(&feedbacks[i]).Related(&feedbacks[i].User)
+	}
+	return feedbacks
+}
+
 //GetFeedbackByPost get feedback by post_id
 func GetFeedbackByPost(post Post) []Feedback {
 	db := Connect()
@@ -31,4 +43,16 @@ func GetFeedbackByPost(post Post) []Feedback {
 		db.Model(&feedbacks[i]).Related(&post)
 	}
 	return feedbacks
+}
+
+//UpdateFeedback update feedback
+func UpdateFeedback(feedback Feedback) (int64, error) {
+	db := Connect()
+	defer db.Close()
+	rs := db.Model(&feedback).Where("id = ?", feedback.ID).UpdateColumns(
+		map[string]interface{}{
+			"comment": feedback.Comment,
+		},
+	)
+	return rs.RowsAffected, rs.Error
 }
