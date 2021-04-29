@@ -6,8 +6,8 @@ import (
 )
 
 type User struct {
-	Name  string `common_tag:"name_common_tag_val",extra_tag:"extra_tag_val"`
-	Email string `common_tag:"email_common_tag_val"`
+	Name  string `common_tag:"name_common_tag_val" extra_tag:"extra_tag_val"`
+	Email string `common_tag:"email_common_tag_val, omitempty"`
 }
 
 func main() {
