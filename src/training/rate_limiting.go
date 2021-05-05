@@ -22,7 +22,6 @@ func main() {
 		fmt.Println("request", req, time.Now())
 	}
 
-
 	// bursty rate limiter when initialize
 	burstyLimiter := make(chan time.Time, 3)
 	for i := 0; i < 3; i++ {

@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func main(){
+func main() {
 
 	ip := "192.168.31.1"
 	var ports = []int{22, 80, 443, 444, 65, 3389}
