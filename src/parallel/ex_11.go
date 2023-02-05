@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+// !!! Caution: maybe this program is a bad case! The style to use for loop.
+
 var Tasks []string
 var mutex sync.Mutex
 var lastDump int64 = 0
@@ -22,6 +24,7 @@ func main() {
 		}(i)
 	}
 
+	// for死循环，这种写法要不得，测试过程中发现CPU被打满
 	for {
 	}
 }
